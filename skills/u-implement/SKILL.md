@@ -93,3 +93,4 @@ Track progress using a checklist. Display the checklist at the start of each ste
 - Always display the progress checklist at the beginning of each step.
 - When returning to a previous step, uncheck all steps from that point onward before displaying the checklist.
 - When presenting options via `ask_questions`, **show the full details of each option in the chat response (markdown) first**, then use `ask_questions` with short labels only. Do not put detailed descriptions inside the `description` field of `ask_questions` options.
+- **Never end the turn without resolution:** If the user's response to any `ask_questions` confirmation is a question or request for clarification, answer it in the chat response and then immediately re-ask the same confirmation using the `ask_questions` tool. Do not end the turn without either advancing to the next step or explicitly re-asking for confirmation.
