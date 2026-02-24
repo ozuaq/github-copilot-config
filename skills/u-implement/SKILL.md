@@ -1,6 +1,6 @@
 ---
 name: u-implement
-description: A structured workflow for planning and implementing features or fixes. Use when the user wants to implement something, add a feature, or make a change. Guides through four steps (requirements gathering → implementation plan → implementation → improvement suggestions), confirming with the user at each step before proceeding.
+description: A structured workflow for planning and implementing features or fixes. Use when the user wants to implement something, add a feature, or make a change. Guides through three steps (requirements gathering → implementation plan → implementation), confirming with the user at each step before proceeding.
 ---
 
 # u-implement Skill: Plan-then-Implement Workflow
@@ -16,7 +16,6 @@ Track progress using a checklist. Display the checklist at the start of each ste
 1. [ ] Requirements gathering
 2. [ ] Implementation plan
 3. [ ] Implementation
-4. [ ] Improvement suggestions
 ```
 
 ---
@@ -52,7 +51,6 @@ Track progress using a checklist. Display the checklist at the start of each ste
    1. [x] Requirements gathering
    2. [ ] Implementation plan
    3. [ ] Implementation
-   4. [ ] Improvement suggestions
    ```
 2. Present the implementation plan in Markdown format, including:
    - **Overview:** Summary of what will be implemented
@@ -77,40 +75,13 @@ Track progress using a checklist. Display the checklist at the start of each ste
    1. [x] Requirements gathering
    2. [x] Implementation plan
    3. [ ] Implementation
-   4. [ ] Improvement suggestions
    ```
 2. Execute the implementation plan:
    - Edit or create the necessary files.
    - After completing the implementation, report a summary of all modified files.
    - If any errors occur, fix them before moving to the next step.
-3. After implementation is complete, use the **`ask_questions` tool** to ask: "Ready to move on to Step 4 (Improvement Suggestions)?"
-4. **Only proceed to Step 4 if the user explicitly confirms.** Otherwise (e.g. the user requests fixes), restart from Step 1.
-
----
-
-## Step 4: Improvement Suggestions
-
-**Goal:** Reflect on the workflow and propose any improvements or opportunities to create new skills.
-
-**Procedure:**
-
-1. Update and display the workflow progress checklist:
-   ```
-   ### Workflow Progress
-   1. [x] Requirements gathering
-   2. [x] Implementation plan
-   3. [x] Implementation
-   4. [ ] Improvement suggestions
-   ```
-2. Review the entire workflow and compile suggestions from these angles:
-   - Repetitive operations encountered during this workflow (candidates for new skills)
-   - Reusable patterns for similar future implementations
-   - Improvements to the `u-implement` skill itself
-3. Use the **`ask_questions` tool** to present the suggestions and ask the user which, if any, to adopt.
-4. If any suggestions are adopted, carry them out.
-   - **If the suggestion involves creating or modifying any skill file** (not limited to `u-implement`), do NOT edit directly. Instead, restart the workflow from **Step 1** to plan and implement the change.
-5. Use the **`ask_questions` tool** to ask: "Would you like to finish the workflow?"
-6. **If the user confirms completion**, end the workflow. Otherwise (e.g. the user requests more changes or does not confirm), restart from **Step 1**.
+3. After implementation is complete, use the **`ask_questions` tool** to ask: "Would you like to finish the workflow?"
+4. **If the user confirms completion**, end the workflow. Otherwise (e.g. the user requests fixes), restart from Step 1.
 
 ---
 
@@ -121,4 +92,4 @@ Track progress using a checklist. Display the checklist at the start of each ste
 - In the implementation plan (Step 2), show only the **changed code sections** with enough surrounding context to locate them — no full files, no diff notation.
 - Always display the progress checklist at the beginning of each step.
 - When returning to a previous step, uncheck all steps from that point onward before displaying the checklist.
-- When presenting options via `ask_questions`, **show the full details of each option in the chat response (markdown) first**, then use `ask_questions` with short labels only (e.g. `①`, `②`). Do not put detailed descriptions inside the `description` field of `ask_questions` options.
+- When presenting options via `ask_questions`, **show the full details of each option in the chat response (markdown) first**, then use `ask_questions` with short labels only. Do not put detailed descriptions inside the `description` field of `ask_questions` options.
