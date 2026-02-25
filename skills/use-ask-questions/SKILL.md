@@ -11,6 +11,7 @@ Always use the `ask_questions` tool (never plain chat text) in these situations:
 2. **When presenting choices** to the user
 3. **After editing files** – confirm the result with the user
 4. **When all tasks are complete** – ask if there is anything else to do
+5. **When calling `run_in_terminal`** – explain the command (all flags and arguments, and what each does) before running, then call `ask_questions`
 
 ## When questions or choices are complex
 

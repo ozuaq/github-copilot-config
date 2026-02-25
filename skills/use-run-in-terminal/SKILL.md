@@ -1,6 +1,6 @@
 ---
 name: use-run-in-terminal
-description: Defines the required workflow when calling run_in_terminal. Load when about to execute a terminal command.
+description: ALWAYS load before calling run_in_terminal. Defines mandatory steps: explain the command to be executed, then call ask_questions.
 ---
 
 # Use run_in_terminal Tool
