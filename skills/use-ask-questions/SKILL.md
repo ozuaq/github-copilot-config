@@ -1,6 +1,6 @@
 ---
 name: use-ask-questions
-description: Defines when and how to use the ask_questions tool. Load when about to ask the user a question, seek confirmation, or after editing files.
+description: Defines when and how to use the ask_questions tool. Load when about to ask the user a question, seek confirmation, after editing files, when all tasks are complete, or when calling run_in_terminal.
 ---
 
 # Use ask_questions Tool
