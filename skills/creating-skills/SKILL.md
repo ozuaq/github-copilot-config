@@ -5,158 +5,160 @@ description: Provides best practices and rules to follow when creating or editin
 
 # Creating and Editing Agent Skills
 
-## 必須ルール
+## Required Rules
 
-### ディレクトリ構成
+### Directory Structure
 
 ```
 .github/skills/
-└── <skill-name>/        # name フィールドと一致させること
-    └── SKILL.md         # 必須
-    └── (任意の補助ファイル)
+└── <skill-name>/        # Must match the name field exactly
+    └── SKILL.md         # Required
+    └── (optional supporting files)
 ```
 
-個人用スキルは `~/.copilot/skills/` に配置する。
+Personal skills go in `~/.copilot/skills/`.
 
-### YAML フロントマター（必須）
+### YAML Frontmatter (required)
 
 ```yaml
 ---
-name: skill-name          # 小文字・数字・ハイフンのみ。最大64文字。ディレクトリ名と一致
-description: ...          # 何をするか＋いつ使うか を明記。最大1024文字
+name: skill-name          # Lowercase, numbers, hyphens only. Max 64 chars. Must match directory name.
+description: ...          # What it does + when to use it. Max 1024 chars.
 ---
 ```
 
-- `name` にXMLタグ・`anthropic`・`claude` は使用禁止
-- `description` にXMLタグは使用禁止
-- `description` は **第三者視点**で書く（例: "Processes Excel files" ✅ / "I can help you" ❌）
+- `name`: no XML tags, no reserved words (`anthropic`, `claude`)
+- `description`: no XML tags
+- `description`: always write in **third person** — "Processes Excel files" ✅ / "I can help you" ❌
 
 ---
 
-## ネーミング規則
+## Naming Conventions
 
-- 動名詞形（gerund）推奨: `creating-skills`, `processing-pdfs`, `managing-databases`
-- 名詞句も可: `pdf-processing`, `spreadsheet-analysis`
-- 避けるべき: `helper`, `utils`, `tools`, `documents`（曖昧すぎる）
+- Prefer gerund form: `creating-skills`, `processing-pdfs`, `managing-databases`
+- Noun phrases also acceptable: `pdf-processing`, `spreadsheet-analysis`
+- Avoid vague names: `helper`, `utils`, `tools`, `documents`
 
 ---
 
-## description の書き方
+## Writing Effective Descriptions
 
-**良い例:**
+**Good:**
 ```
 Processes Excel spreadsheets, creates pivot tables, generates charts.
 Use when analyzing Excel files, spreadsheets, tabular data, or .xlsx files.
 ```
 
-**悪い例:**
+**Bad:**
 ```
 Helps with documents
 Does stuff with files
 I can help you process Excel files
 ```
 
-**ポイント:** Copilot は description でスキルを選択する。何をするか＋いつ使うかの両方を含める。
+Include both **what it does** and **when to use it**. Copilot uses the description to decide which skill to load.
 
 ---
 
-## SKILL.md 本文のルール
+## SKILL.md Body Rules
 
-1. **簡潔に書く** — Claudeがすでに知っていることは書かない。1トークンも無駄にしない
-2. **500行以内** に収める。超える場合は別ファイルに分割してプログレッシブ開示を使う
-3. **参照は1階層まで** — SKILL.md → 参照ファイル。さらに深いネストは避ける
-4. **時間依存情報を書かない** — "2025年8月以降は..." のような記述は禁止。レガシー情報は `<details>` タグで折りたたむ
-5. **用語を統一する** — 同じ概念に複数の言葉を使わない
-6. **パスはスラッシュのみ** — `scripts/helper.py` ✅ / `scripts\helper.py` ❌
+1. **Be concise** — do not explain things Claude already knows; every token competes with context
+2. **Stay under 500 lines** — split into separate files with progressive disclosure if needed
+3. **Keep references one level deep** — SKILL.md → reference files only; no deeper nesting
+4. **No time-sensitive information** — avoid "after August 2025, use..."; wrap legacy info in `<details>`
+5. **Use consistent terminology** — pick one term per concept and stick to it
+6. **Forward slashes only** — `scripts/helper.py` ✅ / `scripts\helper.py` ❌
 
 ---
 
-## プログレッシブ開示パターン
+## Progressive Disclosure Pattern
 
-大きなスキルは補助ファイルを使い、必要なときだけ読み込む:
+For larger skills, use supporting files loaded only when needed:
 
 ```
 skill-name/
-├── SKILL.md          # 概要と参照リンク（500行以内）
-├── advanced.md       # 高度な機能（必要时に読む）
-├── reference.md      # APIリファレンス（必要時に読む）
+├── SKILL.md          # Overview and links (under 500 lines)
+├── advanced.md       # Advanced features (loaded when needed)
+├── reference.md      # API reference (loaded when needed)
 └── scripts/
-    └── helper.py     # 実行スクリプト
+    └── helper.py     # Executable script
 ```
 
-SKILL.md に参照を記載する例:
+Example references in SKILL.md:
 ```markdown
-**基本的な使い方**: [以下に記述]
-**高度な機能**: [advanced.md](advanced.md) を参照
-**APIリファレンス**: [reference.md](reference.md) を参照
+**Basic usage**: [described below]
+**Advanced features**: See [advanced.md](advanced.md)
+**API reference**: See [reference.md](reference.md)
 ```
 
 ---
 
-## 自由度の設定
+## Degree of Freedom
 
-| 状況 | 自由度 | 書き方 |
-|------|--------|--------|
-| 複数のアプローチが有効 | 高 | テキスト指示のみ |
-| 好ましいパターンがある | 中 | テンプレート＋パラメータ |
-| 順序が重要・壊れやすい | 低 | 厳密なコマンド・手順 |
+| Situation | Freedom | Approach |
+|-----------|---------|----------|
+| Multiple valid approaches | High | Text instructions only |
+| A preferred pattern exists | Medium | Template + parameters |
+| Order matters / fragile ops | Low | Exact commands / steps |
 
 ---
 
-## ワークフローとフィードバックループ
+## Workflows and Feedback Loops
 
-複雑なタスクにはチェックリスト形式のワークフローを使う:
+For complex multi-step tasks (5+ steps, destructive operations, or order-critical workflows), include a progress checklist and prompt the user to copy and track it:
 
 ```markdown
-## タスク進捗
+Copy this checklist and track your progress:
 
 - [ ] Step 1: ...
 - [ ] Step 2: ...
 - [ ] Step 3: ...
 ```
 
-品質チェックが必要なタスクにはフィードバックループを実装する:
-1. 実行
-2. バリデーション
-3. エラーがあれば修正して 2 へ戻る
-4. 合格したら次のステップへ
+> **When to include the checklist instruction:** Use it for complex or destructive workflows. Skip it for simple single-step skills — adding it unnecessarily inflates the skill.
+
+For quality-critical tasks, implement a feedback loop:
+1. Execute
+2. Validate
+3. If errors found, fix and return to step 2
+4. Proceed only when validation passes
 
 ---
 
-## 避けるべきアンチパターン
+## Anti-Patterns to Avoid
 
-- ❌ 多すぎる選択肢の提示（デフォルトを1つ提示し、代替案を添える）
-- ❌ Windowsスタイルのパス（バックスラッシュ）
-- ❌ 深いネスト参照（SKILL.md → A.md → B.md → ...）
-- ❌ 長い参照ファイルにTOCなし（100行超は目次を付ける）
-- ❌ 根拠のないマジックナンバー（コメントで理由を説明する）
-
----
-
-## スキル作成のチェックリスト
-
-### コア品質
-- [ ] `description` が具体的で、何をするか＋いつ使うかを含む
-- [ ] SKILL.md 本文が500行以内
-- [ ] 時間依存情報なし
-- [ ] 用語が統一されている
-- [ ] ファイル参照が1階層のみ
-
-### 構造
-- [ ] ディレクトリ名が `name` フィールドと一致
-- [ ] パスはすべてスラッシュ
-- [ ] 100行超の参照ファイルに目次がある
-
-### テスト
-- [ ] 実際のユースケースでテスト済み
-- [ ] スキルが期待通りに自動トリガーされる
+- ❌ Too many options (provide one default with an escape hatch)
+- ❌ Windows-style paths (backslashes)
+- ❌ Deeply nested references (SKILL.md → A.md → B.md → ...)
+- ❌ Long reference files without a table of contents (add TOC for files over 100 lines)
+- ❌ Unexplained magic numbers (document the reason in a comment)
 
 ---
 
-## フロントマターの任意フィールド
+## Checklist for Effective Skills
 
-| フィールド | 説明 |
-|-----------|------|
-| `argument-hint` | スラッシュコマンド使用時のヒントテキスト |
-| `user-invokable: false` | `/` メニューに表示しない（自動トリガーのみ） |
-| `disable-model-invocation: true` | 自動トリガーを無効化（手動のみ） |
+### Core quality
+- [ ] `description` is specific and includes both what it does and when to use it
+- [ ] SKILL.md body is under 500 lines
+- [ ] No time-sensitive information
+- [ ] Terminology is consistent throughout
+- [ ] File references are one level deep only
+
+### Structure
+- [ ] Directory name matches the `name` field
+- [ ] All paths use forward slashes
+- [ ] Reference files over 100 lines have a table of contents
+
+### Testing
+- [ ] Tested with real usage scenarios
+- [ ] Skill activates automatically as expected
+
+---
+
+## Optional Frontmatter Fields
+
+| Field | Description |
+|-------|-------------|
+| `argument-hint` | Hint text shown when skill is invoked as a slash command |
+| `user-invokable: false` | Hide from `/` menu; allow automatic trigger only |
+| `disable-model-invocation: true` | Disable automatic trigger; manual invocation only |
