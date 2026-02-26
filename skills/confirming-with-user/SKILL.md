@@ -31,15 +31,15 @@ Write a markdown section that explains:
 Example:
 
 ---
-### 確認
+### Confirm
 
-以下の方針で実装しました。問題なければそのまま続けます。
+Implemented with the following approach. Will proceed unless you have concerns.
 
-| 選択肢 | 内容 |
-|--------|------|
-| **このまま続ける** | 現在の実装方針を承認し、次のステップへ進みます |
-| **やり直す** | 別のアプローチで最初からやり直します |
-| **詳細を教える** | 方針を変更する具体的な指示を入力してください |
+| Option | Description |
+|--------|-------------|
+| **Proceed** | Approve the current approach and move to the next step |
+| **Redo** | Start over with a different approach |
+| **Provide details** | Enter specific instructions to change the approach |
 
 ---
 
@@ -50,12 +50,12 @@ After the markdown block, invoke `ask_questions` with **concise** labels — the
 ```
 ask_questions({
   questions: [{
-    header: "方針確認",
-    question: "実装方針を確認してください",
+    header: "Confirm",
+    question: "Please confirm the implementation approach",
     options: [
-      { label: "このまま続ける", recommended: true },
-      { label: "やり直す" },
-      { label: "詳細を教える" }
+      { label: "Proceed", recommended: true },
+      { label: "Redo" },
+      { label: "Provide details" }
     ],
     allowFreeformInput: false
   }]
@@ -73,14 +73,14 @@ When you judge that the current task is **fully complete**, always confirm with 
 ### Markdown block
 
 ---
-### タスク完了
+### Task Complete
 
-依頼された作業がすべて完了しました。
+All requested work has been completed.
 
-| 選択肢 | 内容 |
-|--------|------|
-| **完了** | 作業をここで終了します |
-| **追加作業を依頼する** | 続けて別の作業を指示できます |
+| Option | Description |
+|--------|-------------|
+| **Done** | Finish here |
+| **Request more work** | Continue with another task |
 
 ---
 
@@ -89,11 +89,11 @@ When you judge that the current task is **fully complete**, always confirm with 
 ```
 ask_questions({
   questions: [{
-    header: "タスク完了",
-    question: "他にやることはありますか？",
+    header: "Task Done",
+    question: "Is there anything else you'd like to do?",
     options: [
-      { label: "完了", recommended: true },
-      { label: "追加作業を依頼する" }
+      { label: "Done", recommended: true },
+      { label: "Request more work" }
     ],
     allowFreeformInput: true
   }]

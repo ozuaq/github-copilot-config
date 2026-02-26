@@ -62,12 +62,13 @@ Include both **what it does** and **when to use it**. The agent uses the descrip
 
 ## SKILL.md Body Rules
 
-1. **Be concise** — do not explain things the agent already knows; every token competes with context
-2. **Stay under 500 lines** — split into separate files with progressive disclosure if needed
-3. **Keep references one level deep** — SKILL.md → reference files only; no deeper nesting
-4. **No time-sensitive information** — avoid "after August 2025, use..."; wrap legacy info in `<details>`
-5. **Use consistent terminology** — pick one term per concept and stick to it
-6. **Forward slashes only** — `scripts/helper.py` ✅ / `scripts\helper.py` ❌
+1. **Write in English** — all SKILL.md files must be written in English for consistency and compatibility with the agent's training data
+2. **Be concise** — do not explain things the agent already knows; every token competes with context
+3. **Stay under 500 lines** — split into separate files with progressive disclosure if needed
+4. **Keep references one level deep** — SKILL.md → reference files only; no deeper nesting
+5. **No time-sensitive information** — avoid "after August 2025, use..."; wrap legacy info in `<details>`
+6. **Use consistent terminology** — pick one term per concept and stick to it
+7. **Forward slashes only** — `scripts/helper.py` ✅ / `scripts\helper.py` ❌
 
 ---
 
@@ -138,6 +139,7 @@ For quality-critical tasks, implement a feedback loop:
 ## Checklist for Effective Skills
 
 ### Core quality
+- [ ] Written in English
 - [ ] `description` is specific and includes both what it does and when to use it
 - [ ] SKILL.md body is under 500 lines
 - [ ] No time-sensitive information
