@@ -4,7 +4,7 @@
 
 | Agent Skill | 説明 |
 |-------------|------|
-| creating-skills | [ベストプラクティス](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)に則ってAgent Skillを作成・編集する |
+| creating-skills | [Claude公式ドキュメントのAgent Skillsのベストプラクティス](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)に則ってAgent Skillを作成・編集する |
 | interacting-with-user | ユーザーとのやりとりのルールを定義する。ユーザーが明示しない限り、回答を終了せずにやりとりを続けられる |
 | explaining-commands | ターミナルコマンドを実行前に詳しく説明する |
 
